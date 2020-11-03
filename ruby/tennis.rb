@@ -8,11 +8,11 @@ class TennisGame1
 
   def score
     if even?
-      evenMessage(@p1points)
+      even_message(@p1points)
     elsif win_or_advantage?
-      winOrAdvantageMessage(@p1points, @p2points)
+      win_or_advantage_message(@p1points, @p2points)
     else
-      normalMessage(@p1points, @p2points)
+      normal_message(@p1points, @p2points)
     end
   end
 
@@ -26,7 +26,7 @@ class TennisGame1
 
   private
 
-  def evenMessage(score)
+  def even_message(score)
     {
       0 => 'Love-All',
       1 => 'Fifteen-All',
@@ -34,8 +34,8 @@ class TennisGame1
     }.fetch(score, 'Deuce')
   end
 
-  def winOrAdvantageMessage(p1_score, p2_score)
-    diff = p1_score - p2_score
+  def win_or_advantage_message(p1Score, p2Score)
+    diff = p1Score - p2Score
 
     if diff >= 2
       'Win for player1'
@@ -56,8 +56,8 @@ class TennisGame1
     @p1points >= 4 or @p2points >= 4
   end
 
-  def normalMessage(p1_score, p2_score)
-    "#{score_name(p1_score)}-#{score_name(p2_score)}"
+  def normal_message(p1Score, p2Score)
+    "#{score_name(p1Score)}-#{score_name(p2Score)}"
   end
 
   def score_name(score)
@@ -97,15 +97,15 @@ class TennisGame2
   end
 
   def p2_stronger_message
-    return 'Win for ' + @player2Name if p2wins?
-    return 'Advantage ' + @player2Name if @p2points > 3
+    return "Win for #{@player2Name}" if p2wins?
+    return "Advantage #{@player2Name}" if @p2points > 3
 
     normal_message
   end
 
   def p1_stronger_message
-    return 'Win for ' + @player1Name if p1wins?
-    return 'Advantage ' + @player1Name if @p1points > 3
+    return "Win for #{@player1Name}" if p1wins?
+    return "Advantage #{@player1Name}" if @p1points > 3
 
     normal_message
   end
@@ -113,11 +113,11 @@ class TennisGame2
   def even_message
     return 'Deuce' if @p1points > 2
 
-    name_of(@p1points) + '-All'
+    "#{name_of(@p1points)}-All"
   end
 
   def normal_message
-    name_of(@p1points) + '-' + name_of(@p2points)
+    "#{name_of(@p1points)}-#{name_of(@p2points)}"
   end
 
   def name_of(score)
@@ -181,20 +181,20 @@ class TennisGame3
   def score
     if normal_or_all?
       p1_score_name = score_name(@p1)
-      even? ? p1_score_name + '-All' : p1_score_name + '-' + score_name(@p2)
+      even? ? "#{p1_score_name}-All" : "#{p1_score_name}-#{score_name(@p2)}"
     else
       if even?
         'Deuce'
       else
         winner = @p1 > @p2 ? @p1N : @p2N
-        (@p1 - @p2).abs == 1 ? 'Advantage ' + winner : 'Win for ' + winner
+        (@p1 - @p2).abs == 1 ? "Advantage #{winner}" : "Win for #{winner}"
       end
     end
   end
 
   def normal_or_all?
-    not_duce = (@p1 + @p2 < 6)
-    [@p1, @p2].max < 4 && not_duce
+    notDeuce = (@p1 + @p2 < 6)
+    [@p1, @p2].max < 4 && notDeuce
   end
 
   def even?
